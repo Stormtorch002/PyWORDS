@@ -700,7 +700,7 @@ def get_vocab_list(text, filt=MatchFilter(), full_info=False, markdown_fmt=False
     for w in tlist:
         # Patch the 'sum' problem for now...
         if w.replace('u','v').replace('i','j') in definitions.irreg_sum:
-            defns[w] = 'sum, esse, fui, futurus [irreg] to be, exist; (Medieval, in perfect tense) to go')
+            defns[w] = 'sum, esse, fui, futurus [irreg] to be, exist; (Medieval, in perfect tense) to go'
         else:
             ms = lookup.match_word(w)
             if len(ms) == 0:
