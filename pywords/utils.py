@@ -650,7 +650,7 @@ Select a part of speech:
         print("Unknown choice. Quitting.")
         return
 
-def _process_vocab_list_opt(vocab_list,filt,full_info,markdown_fmt):
+def _process__opt(vocab_list,filt,full_info,markdown_fmt):
     """
     Method to parse the vocab_list argument to get_vocab_list
     Simply generates the full formatted vocab list for the file(s) given, 
@@ -695,12 +695,12 @@ def get_vocab_list(text, filt=MatchFilter(), full_info=False, markdown_fmt=False
     if vocab_list:
         vocab_definitions = _process_vocab_list_opt(vocab_list,filt,full_info,markdown_fmt)
 
-    defns = set()
+    defns = {}
     missed = set()
     for w in tlist:
         # Patch the 'sum' problem for now...
         if w.replace('u','v').replace('i','j') in definitions.irreg_sum:
-            defns.add('sum, esse, fui, futurus [irreg] to be, exist; (Medieval, in perfect tense) to go')
+            defns[w] = 'sum, esse, fui, futurus [irreg] to be, exist; (Medieval, in perfect tense) to go')
         else:
             ms = lookup.match_word(w)
             if len(ms) == 0:
@@ -713,11 +713,12 @@ def get_vocab_list(text, filt=MatchFilter(), full_info=False, markdown_fmt=False
                     wdefns.append(lookup.get_dictionary_string(m, full_info=full_info, markdown_fmt=markdown_fmt))
             for wdefn in wdefns:
                 if wdefn != '' and wdefn not in vocab_definitions:
-                    defns.add(wdefn)
+                    defns[w] = wdefn
 
     defns_sort = sorted(defns)
     missed_sort = sorted(missed)
-    return (defns_sort, missed_sort)
+    return defns_sort
+
 
 
 def find_example_sentences(text, word, word_filt=MatchFilter(), infl_filt=MatchFilter()):
